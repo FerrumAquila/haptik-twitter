@@ -12,4 +12,4 @@ class ProfileHandler(object):
         return core_models.Follow.objects.filter(follower=self.instance).values_list('followed', flat=True)
 
     def get_dashboard_tweets(self):
-        return core_models.Tweet.objects.filter(author__in=self.all_following)
+        return core_models.Tweet.objects.filter(author__in=self.all_following).order_by('-id')

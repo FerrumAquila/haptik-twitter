@@ -36,7 +36,7 @@ class Tweet(models.AetosModel):
 
     @property
     def data_json(self):
-        return {'tweet_id': self.pk}
+        return {'tweet_id': self.pk, 'text': self.text, 'timestamp': self.created_at}
 
 
 class Follow(models.AetosModel):

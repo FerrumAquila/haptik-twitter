@@ -80,8 +80,8 @@ def dashboard_tweets(request, profile_id):
     tweets = utils.ProfileHandler(profile).get_dashboard_tweets()
 
     if tweets:
-        return responses.success('tweets for %s found' % str(profile), {
+        return responses.success('dashboard tweets for %s found' % str(profile), {
             'tweets': [t.data_json for t in tweets], 'profile_id': profile.id
         })
     else:
-        return responses.failure('tweets for %s not found' % str(profile), dict())
+        return responses.failure('dashboard tweets for %s not found' % str(profile), dict())
