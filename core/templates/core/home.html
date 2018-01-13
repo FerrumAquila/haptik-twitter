@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% load staticfiles %}
+
+{% block main %}
+<section id="content" style="padding: 30px 30px 30px 30px;">
+</section>
+{% endblock %}
+
+{% block js %}
+$( document ).ready(function() {
+
+    add_tweet_to_dashboard = function(tweet){
+        tweet_html = '<ul>' + tweet.text + '<br>' + tweet.author + '|' + tweet.timestamp + '</ul>'
+        $('#content').html($('#content').html() + tweet_html)
+    };
+
+    $.get('http://localhost:8000/api/profile/{{ profile_id }}/dashboard-tweets/', function(data){
+        tweets = data.data.tweets;
+        $.each(tweets, function(i){
+            tweet = tweets[i];
+            console.log(tweet);
+            add_tweet_to_dashboard(tweet);
+        })
+    })
+
+});
+{% endblock %}
