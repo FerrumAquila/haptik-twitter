@@ -21,7 +21,7 @@ class Profile(models.AetosModel):
 
 class Tweet(models.AetosModel):
     author = models.ForeignKey(Profile, related_name='tweets')
-    text = models.TextField(max_length=1000)
+    text = models.TextField(max_length=140)
     tags = models.ManyToManyField(Profile, related_name='tagged_in')
 
     class Options:
@@ -36,7 +36,7 @@ class Tweet(models.AetosModel):
 
     @property
     def data_json(self):
-        return {'tweet_id': self.pk, 'text': self.text, 'timestamp': self.created_at}
+        return {'author': str(self.author), 'text': self.text, 'timestamp': self.created_at}
 
 
 class Follow(models.AetosModel):

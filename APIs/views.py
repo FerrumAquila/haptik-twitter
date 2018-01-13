@@ -15,9 +15,12 @@ import json
 
 @csrf_exempt
 def create_user_profile(request):
-    user_id = 1
+    if core_models.Profile.objects.filter(user=request.user):
+        return responses.failure('duplicate profile not created', {
+            'profile_id': core_models.Profile.objects.filter(user=request.user).first().pk
+        })
     request_data = json.loads(request.body)
-    request_data.update({'user': core_models.User.objects.get(pk=user_id)})
+    request_data.update({'user': request.user})
 
     # request_data = {'user': core_models.User.objects.all().first(), 'gender': 'M', 'dob': 663680993}
     try:
@@ -30,7 +33,7 @@ def create_user_profile(request):
             'profile_id': profile.id, 'user_id': profile.user.id
         })
     else:
-        return responses.failure('profile not created', {'user_id': user_id})
+        return responses.failure('profile not created', dict())
 
 
 @csrf_exempt
